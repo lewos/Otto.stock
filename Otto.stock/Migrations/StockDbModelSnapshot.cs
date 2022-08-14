@@ -29,7 +29,19 @@ namespace Otto.stock.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Category")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("text");
+
                     b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("MItemId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("MSellerId")
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -41,6 +53,29 @@ namespace Otto.stock.Migrations
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
+
+                    b.Property<string>("SKU")
+                        .HasColumnType("text");
+
+                    b.Property<string>("SellerId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("SellerIdMail")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("State")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("StateDescription")
+                        .HasColumnType("text");
+
+                    b.Property<string>("TItemId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("TSellerId")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

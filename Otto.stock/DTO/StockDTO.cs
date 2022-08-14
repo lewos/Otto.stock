@@ -1,6 +1,6 @@
-﻿namespace Otto.stock.Models
+﻿namespace Otto.stock.DTO
 {
-    public class Stock
+    public class StockDTO
     {
         public int Id { get; set; }
         public string? Name { get; set; }
@@ -19,7 +19,10 @@
         public string? SKU { get; set; }
         public string? Code { get; set; }
         public string? Category { get; set; }
-        public State State { get; set; }
+        //"confirmado",
+        //"pendiente"
+        //"error",
+        public string State { get; set; }
         public string? StateDescription { get; set; }
     }
 }
