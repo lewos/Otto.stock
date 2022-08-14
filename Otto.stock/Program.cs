@@ -23,13 +23,13 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
-app.MapGet("/stock", async (StockDb db) =>
+app.MapGet("/api/stock", async (StockDb db) =>
 {
     var aux = await db.Stocks.ToListAsync();
     return GetListStockDTO(aux);
 });
 
-app.MapGet("/stock/{id}", async (StockDb db, int id) => 
+app.MapGet("/api/stock/{id}", async (StockDb db, int id) => 
 {
     var item = await db.Stocks.FindAsync(id);
     if(item is not null)
@@ -38,15 +38,15 @@ app.MapGet("/stock/{id}", async (StockDb db, int id) =>
 });
 
 
-app.MapPost("/stock", async (StockDb db, StockDTO dto) =>
+app.MapPost("/api/stock", async (StockDb db, StockDTO dto) =>
 {
     var stock = StockMapper.GetStock(dto);
     await db.Stocks.AddAsync(stock);
     await db.SaveChangesAsync();
-    return Results.Created($"/stock/{stock.Id}", stock);
+    return Results.Created($"/api/stock/{stock.Id}", stock);
 });
 
-app.MapPut("/stock/{id}", async (StockDb db, StockDTO dto, int id) =>
+app.MapPut("/api/stock/{id}", async (StockDb db, StockDTO dto, int id) =>
 {
     var updateStock = StockMapper.GetStock(dto);
     var stock = await db.Stocks.FindAsync(id);
@@ -56,7 +56,7 @@ app.MapPut("/stock/{id}", async (StockDb db, StockDTO dto, int id) =>
     return Results.NoContent();
 });
 
-app.MapDelete("/stock/{id}", async (StockDb db, int id) =>
+app.MapDelete("/api/stock/{id}", async (StockDb db, int id) =>
 {
     var stock = await db.Stocks.FindAsync(id);
     if (stock is null)
