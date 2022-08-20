@@ -58,5 +58,17 @@ namespace Otto.stock.Mapper
                 State = stock.State.ToString()
             };
         }
+
+        public static List<StockDTO> GetStockDTOs(List<Stock> stock) 
+        {
+            var result = new List<StockDTO>();
+            foreach (var item in stock)
+            {
+                result.Add(GetStockDTO(item));
+            }
+            return result;
+        }
+
+
     }
 }

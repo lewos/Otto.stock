@@ -37,6 +37,32 @@ app.MapGet("/api/stock/{id}", async (StockDb db, int id) =>
     return null;
 });
 
+app.MapGet("/api/stock/GetStockOfSellerById/{id}", async (StockDb db, string id) =>
+{
+    var items = await db.Stocks.Where(s => s.SellerId == id).ToListAsync();
+    if (items is not null)
+        return StockMapper.GetStockDTOs(items);
+    return null;
+});
+
+
+app.MapGet("/api/stock/GetStockOfSellerByMUserId/{id}", async (StockDb db, string id) =>
+{
+    var items = await db.Stocks.Where(s => s.MSellerId == id).ToListAsync();
+    if (items is not null)
+        return StockMapper.GetStockDTOs(items);
+    return null;
+});
+
+app.MapGet("/api/stock/GetStockOfSellerByMItemId/{id}", async (StockDb db, string id) =>
+{
+    var item = await db.Stocks.Where(s => s.MItemId == id).FirstOrDefaultAsync();
+    if (item is not null)
+        return StockMapper.GetStockDTO(item);
+    return null;
+});
+
+
 
 app.MapPost("/api/stock", async (StockDb db, StockDTO dto) =>
 {
