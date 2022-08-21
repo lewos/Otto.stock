@@ -82,6 +82,16 @@ app.MapPut("/api/stock/{id}", async (StockDb db, StockDTO dto, int id) =>
     return Results.NoContent();
 });
 
+app.MapPut("/api/stock/UpdateQuantityByMItemId/{id}", async (StockDb db, UpdateQuantityDTO dto, string id) =>
+{    
+    var stock = await db.Stocks.Where(s => s.MItemId == id).FirstOrDefaultAsync();
+    if (stock is null) return Results.NotFound();
+    UpdateQuantity(dto.Quantity, stock);
+    await db.SaveChangesAsync();
+    return Results.NoContent();
+});
+
+
 app.MapDelete("/api/stock/{id}", async (StockDb db, int id) =>
 {
     var stock = await db.Stocks.FindAsync(id);
@@ -114,6 +124,12 @@ static void UpdateFields(Stock request, Stock? stock)
     stock.Category = request.Category;
     stock.State = request.State;
     stock.StateDescription = request.StateDescription;
+}
+
+
+static void UpdateQuantity(int QuantityToRest, Stock? stock)
+{
+    stock.Quantity = stock.Quantity - QuantityToRest;
 }
 
 static List<StockDTO> GetListStockDTO(List<Stock> aux)
