@@ -62,6 +62,14 @@ app.MapGet("/api/stock/GetStockOfSellerByMItemId/{id}", async (StockDb db, strin
     return null;
 });
 
+app.MapGet("/api/stock/GetPendingStock", async (StockDb db) =>
+{
+    var items = await db.Stocks.Where(s => s.State == State.Pendiente).ToListAsync();
+    if (items is not null)
+        return StockMapper.GetStockDTOs(items);
+    return null;
+});
+
 
 
 app.MapPost("/api/stock", async (StockDb db, StockDTO dto) =>
